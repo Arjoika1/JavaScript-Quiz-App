@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="quiz-container" id="quiz">
+      <div class="quiz-header">
+        <h2 id="question">Question</h2>
+        
+        <ul>
+            <li>
+                <input type="radio" id="a" name="answer" class="ans">
+                <label for="a" id="a_text">Question</label>
+            </li>
+            <li>
+                <input type="radio" id="b" name="answer"class="ans">
+                <label for="b" id="b_text">Question</label>
+            </li>
+            <li>
+                <input type="radio" id="c" name="answer"class="ans">
+                <label for="c" id="c_text">Question</label>
+            </li>
+            <li>
+                <input type="radio" id="d" name="answer"class="ans">
+                <label for="d" id="d_text">Question</label>
+            </li>
+        </ul>
+     </div>
+        <button id="submit">Submit</button>
+    </div>
+
+    
+</body>
+</html>
+
+<script>
+    const quizData=[
+        {
+            qs: "Who is Phoebe's twin sister?",a:"Ursala",b:"Judy",c:"Regina",d:"Ken Adams",correct:"a"
+        },
+        {
+            qs:"Who was Monica's first kiss?",a:"Richard",b:"Chandler",c:"Ross",d:"Chipp",correct:"c"
+        },
+        {
+            qs:"How many sisters does Joey have?",a:"6",b:"7",c:"8",d:"9",correct:"b"
+        },
+        {
+            qs:"What was Monica's nickname given by her dad?",a:"Tiny Electronica",b:"Poor Honica",c:"Cute Paronica",d:"Little Harmonica",correct:"d"
+        },
+        {
+            qs:"Name the dancer Joey lived with.", a:"Janice",b:"Jane",c:"Janine",d:"Jenny",correct:"c"
+        },
+        {
+            qs:"What did Ross dress up as for Ben in christmas?",a:"Santa Claus",b:"T-rex",c:"Holiday Armadillo",d:"Super-man",correct:"c"
+        },
+        {
+            qs:"Name the assistant who Rachel dated and broke up with her on her 30th Birthday?",a:"Joe",b:"Tag",c:"Will",d:"Phil",correct:"b"
+        },
+        {
+            qs:"What is Rachel's favorite flower?",a:"Lilies",b:"Roses",c:"Jasmine",d:"Daffodils",correct:"a"
+        },
+        {
+            qs:"What did Joey buy Chandler as a token of friendship that Chandler hates?",a:"Pizza",b:"Bracelet",c:"Necklace",d:"Purse",correct:"b"
+        }
+    
+    ];
+    const question=document.getElementById('question');
+    const a_text=document.getElementById('a_text');
+    const b_text=document.getElementById('b_text');
+    const c_text=document.getElementById('c_text');
+    const d_text=document.getElementById('d_text');
+    const submit=document.getElementById('submit');
+    const quiz=document.getElementById('quiz');
+    let currQues=0;
+    let score=0;
+
+    function loadQuiz()
+    {
+        const currQuizData=quizData[currQues];
+          question.innerHTML=currQuizData.qs;
+          a_text.innerHTML=currQuizData.a;
+          b_text.innerHTML=currQuizData.b;
+          c_text.innerHTML=currQuizData.c;
+          d_text.innerHTML=currQuizData.d;
+
+
+        
+    }
+    loadQuiz();
+
+
+    function getSelected()
+    {
+        let p=-1;
+        const rb=document.querySelectorAll('.ans');
+        rb.forEach((ans)=>
+        {
+            if(ans.checked)
+             {
+                 p=ans.id;
+                 ans.checked=false;
+             }
+        });
+        return p;
+    }
+    
+    
+    submit.addEventListener('click',()=>
+    {
+        
+        const ans=getSelected();
+        console.log(ans);
+        if(ans!=-1)
+        {
+            currQues++;
+        if(ans==(quizData[currQues-1].correct))
+        score++;
+        }
+        if(currQues<quizData.length)
+        loadQuiz();
+        else
+        {
+            quiz.innerHTML=`<h2>You Scored ${score}/10!!!</h2><button onclick="location.reload()">Reload</button>`;
+            console.log(score);
+        }
+        
+    })
+    
+</script>
